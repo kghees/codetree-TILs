@@ -5,7 +5,7 @@ public class Main {
         int a = sc.nextInt();
         int b = sc.nextInt();
         int c = sc.nextInt();
-        if(a <= b && b <= c)
+        if(a <= b && a <= c)
             System.out.print(a);
         else if(b <= a && b <= c)
             System.out.print(b);
