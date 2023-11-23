@@ -6,13 +6,16 @@ public class Main {
         int i = 0;
 
         while (true) {
-            int n = sc.nextInt();
-            if (i == 3) {
-                break;
+            int n =sc.nextInt();
+            if(n % 2 == 1){
+                continue;
             }
-            if (n % 2 == 0) {
+            else{
                 System.out.println(n / 2);
                 i++;
+            }
+            if(i == 3){
+                break;
             }
         }
     }
