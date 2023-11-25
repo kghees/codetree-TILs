@@ -8,8 +8,8 @@ public class Main {
             int[] arr = new int[4];
             int sum = 0;
             for(int j = 0; j < n; j++){
-                arr[i] = sc.nextInt();
-                sum += arr[i];
+                arr[j] = sc.nextInt();
+                sum += arr[j];
             }
             double avg = (double)sum / 4;
             if(avg >= 60){
