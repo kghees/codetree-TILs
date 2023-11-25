@@ -5,7 +5,7 @@ public class Main {
         int[] arr = new int[10];
         int n = sc.nextInt();
         arr[0] = 1;
-        arr[1] = 5;
+        arr[1] = n;
         int cnt = 1;
         while(true){
             cnt++;
