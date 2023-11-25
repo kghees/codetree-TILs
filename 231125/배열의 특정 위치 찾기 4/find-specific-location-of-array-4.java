@@ -9,9 +9,10 @@ public class Main {
             arr[i] = sc.nextInt();
             if(arr[i] == 0)
                 break;
-            if(arr[i] % 2 == 0)
+            if(arr[i] % 2 == 0){
                 sum += arr[i];
                 cnt++;
+            }
         }
         System.out.print(cnt + " " + sum);
     }
