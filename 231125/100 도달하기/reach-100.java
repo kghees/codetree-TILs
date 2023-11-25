@@ -6,14 +6,14 @@ public class Main {
         int n = sc.nextInt();
         arr[0] = 1;
         arr[1] = 5;
-        int cnt = 2;
-        for(int i = 2; i < 10; i++){
-            arr[i] = arr[i-1] + arr[i-2];
+        int cnt = 1;
+        while(true){
             cnt++;
-            if(arr[i] >= 100)
+            arr[cnt] = arr[cnt-1] + arr[cnt-2];
+            if(arr[cnt] > 100)
                 break;
         }
-        for(int i = 0; i < cnt; i++){
+        for(int i = 0; i <= cnt; i++){
             System.out.print(arr[i] + " ");
         }
     }
