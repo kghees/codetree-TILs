@@ -18,19 +18,14 @@ public class Main {
 
             else if(x == 2){
                 int a = sc.nextInt();
-                int k = 0;
+                int k = -1;
                 for(int j = 0; j < n; j++){
                     if(arr[j] == a){
                         k = j;
                         break;
                     }
                 }
-                if(k == 0){
-                    System.out.println(0);
-                }
-                else{
-                    System.out.println(k+1);
-                }
+                System.out.println(k+1);
             }
             else{
                 int a = sc.nextInt();
