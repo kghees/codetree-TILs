@@ -38,7 +38,7 @@ public class Main {
                 for(int j = a-1; j < b; j++){
                     System.out.print(arr[j] + " ");
                 }
-                System.out.print("\n");
+                System.out.println();
             }
         }
 
