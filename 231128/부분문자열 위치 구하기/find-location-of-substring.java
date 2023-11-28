@@ -10,7 +10,7 @@ public class Main {
         }
         else{
             for(int i = 0; i < (s.length() - a.length() + 1); i++){
-                if(s.substring(i,i+2).equals(a)){
+                if(s.substring(i,i+a.length()).equals(a)){
                     index = i;
                     break;
                 }
