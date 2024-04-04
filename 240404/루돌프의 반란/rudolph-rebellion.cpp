@@ -19,11 +19,11 @@ int stun_santa[1004];
 void crash(int cy, int cx, int my, int mx, int s_num) {
     //일반 충돌 이동
     if (map[cy][cx] == 0) {
-        map[cy][cx] = s_num;
         //충돌했는데 루돌프가 아니라면 있던 자리 0으로 초기화 해줘야함
         if (map[santa_location[s_num].first][santa_location[s_num].second] != -1) {
             map[santa_location[s_num].first][santa_location[s_num].second] = 0;
         }
+        map[cy][cx] = s_num;
         santa_location[s_num] = { cy,cx };
         return;
     }
@@ -175,7 +175,7 @@ void move_santa(int turn) {
                 //반대방향으로 d만큼 밀려나기
                 int tempcy = tempsy + (-dy[flag] * d);
                 int tempcx = tempsx + (-dx[flag] * d);
-
+                map[santa_location[i].first][santa_location[i].second] = 0;
                 //범위 넘어가면 죽이기
                 if (tempcy > n || tempcy < 1 || tempcx > n || tempcx < 1) {
                     santa_live[i] = false;
@@ -209,7 +209,7 @@ int main() {
         santa_location[num] = { y,x };
         santa_live[num] = true;
     }
-    
+    int de = 1;
     for (int i = 1; i <= m; i++) {
         move_dear(ry, rx, i);
         move_santa(i);
