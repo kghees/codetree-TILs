@@ -195,7 +195,7 @@ void move_santa(int turn) {
             }
         }
     }
-    map[ry][rx] = -1;
+    //map[ry][rx] = -1;
 }
 
 int main() {
