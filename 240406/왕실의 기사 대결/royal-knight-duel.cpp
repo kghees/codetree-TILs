@@ -42,7 +42,7 @@ void command(int idx, int d) {
             if (!visited[ny][nx]) {
                 //다른 기사 라면
                 if (knight[ny][nx] > 0) {
-                    int nidx = knight[ny][nx]-1;
+                    int nidx = knight[ny][nx];
                     crash.push_back(nidx);
                     //다른 기사에 대해서도 벽이 있는지 조사해야하므로 q에 넣어주고 방문체크
                     for (int i = v[nidx].r; i < v[nidx].r + v[nidx].h; i++) {
@@ -70,7 +70,7 @@ void command(int idx, int d) {
         for (int j = v[idx].c; j < v[idx].c + v[idx].w; j++) {
             knight[i][j] = 0; //이동했으므로 0으로 바꿔주기
             //knight[i + dy[d]][j + dx[d]] = idx + 1; //기사 해당방향으로 이동시켜주기
-            knight_save[i + dy[d]][j + dx[d]] = idx + 1;
+            knight_save[i + dy[d]][j + dx[d]] = idx;
         }
     }
     //idx에 해당하는 기사 좌표 업데이트
@@ -85,8 +85,8 @@ void command(int idx, int d) {
             for (int t = v[nidx].c; t < v[nidx].c + v[nidx].w; t++) {
                 //먼저 명령받은 기사가 이동했으면 건들지 않아야 하므로
                 //knight[i + dy[d]][j + dx[d]] = nidx+1;
-                knight[i][j] = 0;
-                knight_save[j + dy[d]][t + dx[d]] = nidx + 1;
+                knight[j][t] = 0;
+                knight_save[j + dy[d]][t + dx[d]] = nidx;
             }
         }
         //nidx에 해당하는 기사 좌표 업데이트
@@ -112,9 +112,9 @@ void damage() {
                     //체력 없어지면 바로 기사 사라지게 하기
                     if (v[idx].k <= 0) {
                         v[idx].live = false;
-                        for (int j = v[idx].r; j < v[idx].r + v[idx].h; j++) {
-                            for (int t = v[idx].c; t < v[idx].c + v[idx].w; t++) {
-                                knight[j][t] = 0;
+                        for (int a = v[idx].r; a < v[idx].r + v[idx].h; a++) {
+                            for (int b = v[idx].c; b < v[idx].c + v[idx].w; b++) {
+                                knight[a][b] = 0;
                             }
                         }
                     }
@@ -132,6 +132,7 @@ int main() {
             cin >> map[i][j];
         }
     }
+    v.push_back({ 0,0,0,0,0,0,true });
     for (int i = 1; i <= n; i++) {
         int r, c, h, w, k;
         cin >> r >> c >> h >> w >> k;
@@ -142,16 +143,17 @@ int main() {
             }
         }
     }
+    int de = 1;
     for (int i = 0; i < q; i++) {
         int x, d;
         cin >> x >> d;
-        command(x-1, d);//v로 0,1,2이렇게 들어가기 떄문에 -1 해서 넣어주기
+        command(x, d);
         damage(); //다 밀고 나서 데미지 주기
         crash.clear();//다음 턴을 위해 clear해주기
     }
     int res = 0;
     //생존한 기사들의 데미지만 합산
-    for (int i = 0; i < n; i++) {
+    for (int i = 1; i <= n; i++) {
         if (v[i].live) res += v[i].health;
     }
     cout << res;
