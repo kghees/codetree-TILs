@@ -95,7 +95,7 @@ void command(int idx, int d) {
     }
     for (int i = 1; i <= l; i++) {
         for (int j = 1; j <= l; j++) {
-            knight[i][j] = knight_save[i][j];
+            if(knight[i][j]) knight[i][j] = knight_save[i][j];
         }
     }
 }
@@ -144,7 +144,7 @@ int main() {
         }
     }
     int de = 1;
-    for (int i = 0; i < q; i++) {
+    for (int i = 1; i <= q; i++) {
         int x, d;
         cin >> x >> d;
         command(x, d);
@@ -157,4 +157,5 @@ int main() {
         if (v[i].live) res += v[i].health;
     }
     cout << res;
+    return 0;
 }
