@@ -68,7 +68,7 @@ void command(int idx, int d) {
     //명령받은 기사 이동시키기
     for (int i = v[idx].r; i < v[idx].r + v[idx].h; i++) {
         for (int j = v[idx].c; j < v[idx].c + v[idx].w; j++) {
-            //knight[i][j] = 0; //이동했으므로 0으로 바꿔주기
+            knight[i][j] = 0; //이동했으므로 0으로 바꿔주기
             //knight[i + dy[d]][j + dx[d]] = idx + 1; //기사 해당방향으로 이동시켜주기
             knight_save[i + dy[d]][j + dx[d]] = idx + 1;
         }
@@ -85,7 +85,7 @@ void command(int idx, int d) {
             for (int t = v[nidx].c; t < v[nidx].c + v[nidx].w; t++) {
                 //먼저 명령받은 기사가 이동했으면 건들지 않아야 하므로
                 //knight[i + dy[d]][j + dx[d]] = nidx+1;
-                //knight[i][j] = 0;
+                knight[i][j] = 0;
                 knight_save[j + dy[d]][t + dx[d]] = nidx + 1;
             }
         }
