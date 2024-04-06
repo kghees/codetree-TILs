@@ -95,7 +95,7 @@ void command(int idx, int d) {
     }
     for (int i = 1; i <= l; i++) {
         for (int j = 1; j <= l; j++) {
-            if(knight[i][j]) knight[i][j] = knight_save[i][j];
+            if(knight_save[i][j]) knight[i][j] = knight_save[i][j];
         }
     }
 }
