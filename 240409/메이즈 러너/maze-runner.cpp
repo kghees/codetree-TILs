@@ -36,17 +36,15 @@ void all_move() {
             }
 
         }
-        if (mindis == 0) {
-            v[i].move++;
-            v[i].live = false;
-            v[i].y = 0;
-            v[i].x = 0;
-            continue;
-        }
         if (ly != tempy || lx != tempx) {
             v[i].move++;
             v[i].y = ly;
             v[i].x = lx;
+        }
+        if (mindis == 0) {
+            v[i].live = false;
+            v[i].y = 0;
+            v[i].x = 0;
         }
         
     }
