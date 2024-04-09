@@ -27,16 +27,14 @@ void all_move() {
         for (int l = 0; l < 4; l++) {
             int ny = tempy + dy[l];
             int nx = tempx + dx[l];
-            if (ny > n || ny < 1 || nx > n || nx < 1 || map[ny][nx] > 0) continue;
-            int tempdis = abs(eny - ny) + abs(enx - nx);
-            if(mindis > tempdis){
-                mindis = tempdis;
+            if (ny <= n && ny >= 1 && nx <= n && nx >= 1 && !map[ny][nx] && (abs(eny - ny) + abs(enx - nx) < mindis)) {
+                mindis = abs(eny - ny) + abs(enx - nx);
                 ly = ny;
                 lx = nx;
             }
 
         }
-        if (ly != tempy || lx != tempx) {
+        if (!(ly == v[i].y && lx == v[i].x)) {
             v[i].move++;
             v[i].y = ly;
             v[i].x = lx;
@@ -46,15 +44,15 @@ void all_move() {
             v[i].y = 0;
             v[i].x = 0;
         }
-        
+
     }
 }
 //시계방향 90도 회전
 void rotation(int d, int y, int x) {
-    int save[11][11] = {0};
+    int save[11][11] = { 0 };
+    int save1[11][11] = { 0 };
     bool check[11] = { false };
     int flag = 0;
-    int save1[11][11] = { 0 };
     for (int i = y; i <= y + d; i++) {
         for (int j = x; j <= x + d; j++) {
             save[i - y][j - x] = map[i][j];
@@ -64,14 +62,24 @@ void rotation(int d, int y, int x) {
                 if (!v[l].live) continue;
                 if (i == v[l].y && j == v[l].x && !check[l]) {
                     check[l] = true;
-                    v[l].y = j - x + y;
-                    v[l].x = d - i + y + x;
+                    int newy = i - y;
+                    int newx = j - x;
+                    int ntempy = newy;
+                    newy = newx;
+                    newx = d - ntempy;
+                    v[l].y = newy + y;
+                    v[l].x = newx + x;
                 }
             }
             if (!flag && i == eny && j == enx) {
                 flag = 1;
-                eny = j - x + y;
-                enx = d - i + y + x;
+                int newy = i - y;
+                int newx = j - x;
+                int ntempy = newy;
+                newy = newx;
+                newx = d - ntempy;
+                eny = newy + y;
+                enx = newx + x;
             }
         }
     }
@@ -87,7 +95,7 @@ void rotation(int d, int y, int x) {
             map[i + y][j + x] = save1[i][j];
         }
     }
-    
+
 }
 
 //사각형 찾기
@@ -96,26 +104,26 @@ void square() {
     int nowy = 100, nowx = 100;
     for (int i = 1; i <= m; i++) {
         if (!v[i].live) continue;
-        int dis = max(abs(eny - v[i].y), abs(enx - v[i].x));
         int ny, nx;
+        int dis = max(abs(eny - v[i].y), abs(enx - v[i].x));
         //큰거랑 같다면 그게 사각형 제일 왼쪽 위 좌표일 것임
         if (dis == abs(eny - v[i].y)) ny = min(eny, v[i].y);
         //큰 거중 거리를 뺏는데 1보다 작아지면 1이 왼쪽 위 좌표
         else {
-            ny = max(eny, v[i].y) - dis;
+            ny = min(eny, v[i].y) - (dis - abs(eny - v[i].y));
             if (ny < 1) ny = 1;
         }
         if (dis == abs(enx - v[i].x)) nx = min(enx, v[i].x);
         else {
-            nx = max(enx, v[i].x) - dis;
+            nx = min(enx, v[i].x) - (dis - abs(enx - v[i].x));
             if (nx < 1) nx = 1;
         }
         if (mindis > dis) {
             mindis = dis;
-            nowy = ny,nowx = nx;
+            nowy = ny, nowx = nx;
         }
         else if (mindis == dis) {
-            if (nowy > ny) ny = nowy, nx = nowx;
+            if (nowy > ny) nowy = ny, nowx = nx;
             else if (nowy == ny) {
                 if (nowx > nx) nowx = nx;
             }
@@ -139,8 +147,7 @@ int main() {
         v.push_back({ a,b,0,true });
     }
     cin >> eny >> enx;
-    map[eny][enx] = -10;
-    int temp = 0;
+    //map[eny][enx] = -10;
     for (int i = 1; i <= k; i++) {
         all_move();
         //모든 참가자 나갔으면 더 이상 할 필요 X
@@ -149,11 +156,9 @@ int main() {
             if (!v[j].live)cnt++;
         }
         if (cnt == m) {
-            temp = i;
             break;
         }
         square();
-        int de = 1;
     }
     int res = 0;
     for (int i = 1; i <= m; i++) {
